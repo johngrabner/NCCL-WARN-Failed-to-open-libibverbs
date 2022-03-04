@@ -1,0 +1,21 @@
+version: '3.2' # must specify or else version 1 will be used
+
+services: # containers, same as docker run
+
+  # train using production data
+  bug: 
+    build: 
+        context: .
+        dockerfile: Dockerfile
+    image: bug
+    #command: tail -F anything
+    shm_size: '8gb'
+    deploy:                 # uncomment to give this docker access to GPU resources needed for "python train.py"
+        resources:          # it worked once and failed once, todo sort out since a must for training
+          reservations:
+            devices:
+            - capabilities: [gpu]
+    environment:
+      - PYTHONIOENCODING=utf-8
+      - PYTHONPATH=/src
+      - NCCL_DEBUG=WARN # https://github.com/PyTorchLightning/pytorch-lightning/issues/9641
