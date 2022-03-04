@@ -1,0 +1,246 @@
+in Dockerfile replace
+   FROM pytorch/pytorch:1.10.0-cuda11.3-cudnn8-runtime
+with
+   FROM pytorch/pytorch:1.7.1-cuda11.0-cudnn8-runtime
+Obsever same error
+   NCCL WARN Failed to open libibverbs.so
+   Problem present since this release and present in 1.10 also
+
+john@john-trx40-designare:/Disk2/Documents/GitHub/NCCL-WARN-Failed-to-open-libibverbs$ sh run.sh 
+Building bug
+Sending build context to Docker daemon  132.1kB
+Step 1/6 : FROM pytorch/pytorch:1.7.1-cuda11.0-cudnn8-runtime
+ ---> 331a461a25f9
+Step 2/6 : RUN pip install pytorch-lightning==1.5.10
+ ---> Running in 65eada502fd1
+Collecting pytorch-lightning==1.5.10
+  Downloading pytorch_lightning-1.5.10-py3-none-any.whl (527 kB)
+Collecting future>=0.17.1
+  Downloading future-0.18.2.tar.gz (829 kB)
+Collecting setuptools==59.5.0
+  Downloading setuptools-59.5.0-py3-none-any.whl (952 kB)
+Requirement already satisfied: typing-extensions in /opt/conda/lib/python3.8/site-packages (from pytorch-lightning==1.5.10) (3.7.4.3)
+Collecting pyDeprecate==0.3.1
+  Downloading pyDeprecate-0.3.1-py3-none-any.whl (10 kB)
+Collecting packaging>=17.0
+  Downloading packaging-21.3-py3-none-any.whl (40 kB)
+Requirement already satisfied: PyYAML>=5.1 in /opt/conda/lib/python3.8/site-packages (from pytorch-lightning==1.5.10) (5.3.1)
+Collecting fsspec[http]!=2021.06.0,>=2021.05.0
+  Downloading fsspec-2022.2.0-py3-none-any.whl (134 kB)
+Requirement already satisfied: torch>=1.7.* in /opt/conda/lib/python3.8/site-packages (from pytorch-lightning==1.5.10) (1.7.1)
+Collecting torchmetrics>=0.4.1
+  Downloading torchmetrics-0.7.2-py3-none-any.whl (397 kB)
+Requirement already satisfied: numpy>=1.17.2 in /opt/conda/lib/python3.8/site-packages (from pytorch-lightning==1.5.10) (1.19.2)
+Collecting tensorboard>=2.2.0
+  Downloading tensorboard-2.8.0-py3-none-any.whl (5.8 MB)
+Requirement already satisfied: tqdm>=4.41.0 in /opt/conda/lib/python3.8/site-packages (from pytorch-lightning==1.5.10) (4.51.0)
+Collecting pyparsing!=3.0.5,>=2.0.2
+  Downloading pyparsing-3.0.7-py3-none-any.whl (98 kB)
+Requirement already satisfied: requests; extra == "http" in /opt/conda/lib/python3.8/site-packages (from fsspec[http]!=2021.06.0,>=2021.05.0->pytorch-lightning==1.5.10) (2.24.0)
+Collecting aiohttp; extra == "http"
+  Downloading aiohttp-3.8.1-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl (1.3 MB)
+Collecting absl-py>=0.4
+  Downloading absl_py-1.0.0-py3-none-any.whl (126 kB)
+Collecting markdown>=2.6.8
+  Downloading Markdown-3.3.6-py3-none-any.whl (97 kB)
+Collecting google-auth<3,>=1.6.3
+  Downloading google_auth-2.6.0-py2.py3-none-any.whl (156 kB)
+Collecting google-auth-oauthlib<0.5,>=0.4.1
+  Downloading google_auth_oauthlib-0.4.6-py2.py3-none-any.whl (18 kB)
+Collecting protobuf>=3.6.0
+  Downloading protobuf-3.19.4-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.1 MB)
+Requirement already satisfied: wheel>=0.26 in /opt/conda/lib/python3.8/site-packages (from tensorboard>=2.2.0->pytorch-lightning==1.5.10) (0.35.1)
+Collecting tensorboard-data-server<0.7.0,>=0.6.0
+  Downloading tensorboard_data_server-0.6.1-py3-none-manylinux2010_x86_64.whl (4.9 MB)
+Collecting grpcio>=1.24.3
+  Downloading grpcio-1.44.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (4.3 MB)
+Collecting werkzeug>=0.11.15
+  Downloading Werkzeug-2.0.3-py3-none-any.whl (289 kB)
+Collecting tensorboard-plugin-wit>=1.6.0
+  Downloading tensorboard_plugin_wit-1.8.1-py3-none-any.whl (781 kB)
+Requirement already satisfied: chardet<4,>=3.0.2 in /opt/conda/lib/python3.8/site-packages (from requests; extra == "http"->fsspec[http]!=2021.06.0,>=2021.05.0->pytorch-lightning==1.5.10) (3.0.4)
+Requirement already satisfied: idna<3,>=2.5 in /opt/conda/lib/python3.8/site-packages (from requests; extra == "http"->fsspec[http]!=2021.06.0,>=2021.05.0->pytorch-lightning==1.5.10) (2.10)
+Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,<1.26,>=1.21.1 in /opt/conda/lib/python3.8/site-packages (from requests; extra == "http"->fsspec[http]!=2021.06.0,>=2021.05.0->pytorch-lightning==1.5.10) (1.25.11)
+Requirement already satisfied: certifi>=2017.4.17 in /opt/conda/lib/python3.8/site-packages (from requests; extra == "http"->fsspec[http]!=2021.06.0,>=2021.05.0->pytorch-lightning==1.5.10) (2020.12.5)
+Collecting aiosignal>=1.1.2
+  Downloading aiosignal-1.2.0-py3-none-any.whl (8.2 kB)
+Collecting multidict<7.0,>=4.5
+  Downloading multidict-6.0.2-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (121 kB)
+Collecting frozenlist>=1.1.1
+  Downloading frozenlist-1.3.0-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (158 kB)
+Collecting yarl<2.0,>=1.0
+  Downloading yarl-1.7.2-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl (308 kB)
+Collecting attrs>=17.3.0
+  Downloading attrs-21.4.0-py2.py3-none-any.whl (60 kB)
+Collecting charset-normalizer<3.0,>=2.0
+  Downloading charset_normalizer-2.0.12-py3-none-any.whl (39 kB)
+Collecting async-timeout<5.0,>=4.0.0a3
+  Downloading async_timeout-4.0.2-py3-none-any.whl (5.8 kB)
+Requirement already satisfied: six in /opt/conda/lib/python3.8/site-packages (from absl-py>=0.4->tensorboard>=2.2.0->pytorch-lightning==1.5.10) (1.15.0)
+Collecting importlib-metadata>=4.4; python_version < "3.10"
+  Downloading importlib_metadata-4.11.2-py3-none-any.whl (17 kB)
+Collecting rsa<5,>=3.1.4; python_version >= "3.6"
+  Downloading rsa-4.8-py3-none-any.whl (39 kB)
+Collecting pyasn1-modules>=0.2.1
+  Downloading pyasn1_modules-0.2.8-py2.py3-none-any.whl (155 kB)
+Collecting cachetools<6.0,>=2.0.0
+  Downloading cachetools-5.0.0-py3-none-any.whl (9.1 kB)
+Collecting requests-oauthlib>=0.7.0
+  Downloading requests_oauthlib-1.3.1-py2.py3-none-any.whl (23 kB)
+Collecting zipp>=0.5
+  Downloading zipp-3.7.0-py3-none-any.whl (5.3 kB)
+Collecting pyasn1>=0.1.3
+  Downloading pyasn1-0.4.8-py2.py3-none-any.whl (77 kB)
+Collecting oauthlib>=3.0.0
+  Downloading oauthlib-3.2.0-py3-none-any.whl (151 kB)
+Building wheels for collected packages: future
+  Building wheel for future (setup.py): started
+  Building wheel for future (setup.py): finished with status 'done'
+  Created wheel for future: filename=future-0.18.2-py3-none-any.whl size=491059 sha256=a61ea1fcc1c477d189d27c208edbe6f2006f79abb54dace154540202abf2c490
+  Stored in directory: /root/.cache/pip/wheels/8e/70/28/3d6ccd6e315f65f245da085482a2e1c7d14b90b30f239e2cf4
+Successfully built future
+Installing collected packages: future, setuptools, pyDeprecate, pyparsing, packaging, frozenlist, aiosignal, multidict, yarl, attrs, charset-normalizer, async-timeout, aiohttp, fsspec, torchmetrics, absl-py, zipp, importlib-metadata, markdown, pyasn1, rsa, pyasn1-modules, cachetools, google-auth, oauthlib, requests-oauthlib, google-auth-oauthlib, protobuf, tensorboard-data-server, grpcio, werkzeug, tensorboard-plugin-wit, tensorboard, pytorch-lightning
+  Attempting uninstall: setuptools
+    Found existing installation: setuptools 50.3.1.post20201107
+    Uninstalling setuptools-50.3.1.post20201107:
+      Successfully uninstalled setuptools-50.3.1.post20201107
+Successfully installed absl-py-1.0.0 aiohttp-3.8.1 aiosignal-1.2.0 async-timeout-4.0.2 attrs-21.4.0 cachetools-5.0.0 charset-normalizer-2.0.12 frozenlist-1.3.0 fsspec-2022.2.0 future-0.18.2 google-auth-2.6.0 google-auth-oauthlib-0.4.6 grpcio-1.44.0 importlib-metadata-4.11.2 markdown-3.3.6 multidict-6.0.2 oauthlib-3.2.0 packaging-21.3 protobuf-3.19.4 pyDeprecate-0.3.1 pyasn1-0.4.8 pyasn1-modules-0.2.8 pyparsing-3.0.7 pytorch-lightning-1.5.10 requests-oauthlib-1.3.1 rsa-4.8 setuptools-59.5.0 tensorboard-2.8.0 tensorboard-data-server-0.6.1 tensorboard-plugin-wit-1.8.1 torchmetrics-0.7.2 werkzeug-2.0.3 yarl-1.7.2 zipp-3.7.0
+Removing intermediate container 65eada502fd1
+ ---> 41aa9deb9be0
+Step 3/6 : WORKDIR /src
+ ---> Running in f4dc4c6c6aed
+Removing intermediate container f4dc4c6c6aed
+ ---> e4069f4d0f0a
+Step 4/6 : COPY ./bug-demo.py ./
+ ---> 80d294259bd8
+Step 5/6 : COPY ./collect_env.py ./
+ ---> 8fb26349fd4e
+Step 6/6 : CMD python ./bug-demo.py
+ ---> Running in 28a57d3a3bd9
+Removing intermediate container 28a57d3a3bd9
+ ---> 0135935f5ad9
+Successfully built 0135935f5ad9
+Successfully tagged bug:latest
+Recreating bug_bug_1 ... done
+Attaching to bug_bug_1
+ 90%|█████████ | 8945664/9912422 [00:01</opt/conda/lib/python3.8/site-packages/torchvision/datasets/mnist.py:480: UserWarning: The given NumPy array is not writeable, and PyTorch does not support non-writeable tensors. This means you can write to the underlying (supposedly non-writeable) NumPy array using the tensor. You may want to copy the array to protect its data or make it writeable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at  /opt/conda/conda-bld/pytorch_1607370172916/work/torch/csrc/utils/tensor_numpy.cpp:141.)
+bug_1  |   return torch.from_numpy(parsed.astype(m[2], copy=False)).view(*s)
+32768it [00:00, 42155.01it/s]                          
+1654784it [00:00, 2467805.93it/s]                            
+8192it [00:00, 30225.04it/s]            
+bug_1  | GPU available: True, used: True
+bug_1  | TPU available: False, using: 0 TPU cores
+bug_1  | IPU available: False, using: 0 IPUs
+bug_1  | Downloading http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz to /src/MNIST/raw/train-images-idx3-ubyte.gz
+bug_1  | Extracting /src/MNIST/raw/train-images-idx3-ubyte.gz to /src/MNIST/raw
+bug_1  | Downloading http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz to /src/MNIST/raw/train-labels-idx1-ubyte.gz
+bug_1  | Extracting /src/MNIST/raw/train-labels-idx1-ubyte.gz to /src/MNIST/raw
+bug_1  | Downloading http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz to /src/MNIST/raw/t10k-images-idx3-ubyte.gz
+bug_1  | Extracting /src/MNIST/raw/t10k-images-idx3-ubyte.gz to /src/MNIST/raw
+bug_1  | Downloading http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz to /src/MNIST/raw/t10k-labels-idx1-ubyte.gz
+bug_1  | Extracting /src/MNIST/raw/t10k-labels-idx1-ubyte.gz to /src/MNIST/raw
+bug_1  | Processing...
+bug_1  | Done!
+bug_1  | ****************************
+bug_1  | torch.cuda.device_count:2
+bug_1  | ****************************
+bug_1  | Collecting environment information...
+bug_1  | PyTorch version: 1.7.1
+bug_1  | Is debug build: False
+bug_1  | CUDA used to build PyTorch: 11.0
+bug_1  | ROCM used to build PyTorch: N/A
+bug_1  | OS: Ubuntu 18.04.5 LTS (x86_64)
+bug_1  | GCC version: Could not collect
+bug_1  | Clang version: Could not collect
+bug_1  | CMake version: Could not collect
+bug_1  | Libc version: glibc-2.27
+bug_1  | Python version: 3.8.5 (default, Sep  4 2020, 07:30:14)  [GCC 7.3.0] (64-bit runtime)
+bug_1  | Python platform: Linux-5.4.0-100-generic-x86_64-with-glibc2.10
+bug_1  | Is CUDA available: True
+bug_1  | CUDA runtime version: Could not collect
+bug_1  | GPU models and configuration: 
+bug_1  | GPU 0: NVIDIA RTX A6000
+bug_1  | GPU 1: NVIDIA RTX A6000
+bug_1  | 
+bug_1  | Nvidia driver version: 510.47.03
+bug_1  | cuDNN version: Could not collect
+bug_1  | HIP runtime version: N/A
+bug_1  | MIOpen runtime version: N/A
+bug_1  | Is XNNPACK available: True
+bug_1  | Versions of relevant libraries:
+bug_1  | [pip3] numpy==1.19.2
+bug_1  | [pip3] pytorch-lightning==1.5.10
+bug_1  | [pip3] torch==1.7.1
+bug_1  | [pip3] torchelastic==0.2.1
+bug_1  | [pip3] torchmetrics==0.7.2
+bug_1  | [pip3] torchvision==0.8.2
+bug_1  | [conda] blas                      1.0                         mkl  
+bug_1  | [conda] cudatoolkit               11.0.221             h6bb024c_0  
+bug_1  | [conda] mkl                       2020.2                      256  
+bug_1  | [conda] mkl-service               2.3.0            py38he904b0f_0  
+bug_1  | [conda] mkl_fft                   1.2.0            py38h23d657b_0  
+bug_1  | [conda] mkl_random                1.1.1            py38h0573a6f_0  
+bug_1  | [conda] numpy                     1.19.2           py38h54aff64_0  
+bug_1  | [conda] numpy-base                1.19.2           py38hfa32c7d_0  
+bug_1  | [conda] pytorch                   1.7.1           py3.8_cuda11.0.221_cudnn8.0.5_0    pytorch
+bug_1  | [conda] pytorch-lightning         1.5.10                   pypi_0    pypi
+bug_1  | [conda] torchelastic              0.2.1                    pypi_0    pypi
+bug_1  | [conda] torchmetrics              0.7.2                    pypi_0    pypi
+bug_1  | [conda] torchvision               0.8.2                py38_cu110    pytorch
+bug_1  | ****************************
+bug_1  | ****************************
+bug_1  | torch.cuda.device_count:2
+bug_1  | ****************************
+bug_1  | Collecting environment information...
+bug_1  | PyTorch version: 1.7.1
+bug_1  | Is debug build: False
+bug_1  | CUDA used to build PyTorch: 11.0
+bug_1  | ROCM used to build PyTorch: N/A
+bug_1  | OS: Ubuntu 18.04.5 LTS (x86_64)
+bug_1  | GCC version: Could not collect
+bug_1  | Clang version: Could not collect
+bug_1  | CMake version: Could not collect
+bug_1  | Libc version: glibc-2.27
+bug_1  | Python version: 3.8.5 (default, Sep  4 2020, 07:30:14)  [GCC 7.3.0] (64-bit runtime)
+bug_1  | Python platform: Linux-5.4.0-100-generic-x86_64-with-glibc2.10
+bug_1  | Is CUDA available: True
+bug_1  | CUDA runtime version: Could not collect
+bug_1  | GPU models and configuration: 
+bug_1  | GPU 0: NVIDIA RTX A6000
+bug_1  | GPU 1: NVIDIA RTX A6000
+bug_1  | 
+bug_1  | Nvidia driver version: 510.47.03
+bug_1  | cuDNN version: Could not collect
+bug_1  | HIP runtime version: N/A
+bug_1  | MIOpen runtime version: N/A
+bug_1  | Is XNNPACK available: True
+bug_1  | Versions of relevant libraries:
+bug_1  | [pip3] numpy==1.19.2
+bug_1  | [pip3] pytorch-lightning==1.5.10
+bug_1  | [pip3] torch==1.7.1
+bug_1  | [pip3] torchelastic==0.2.1
+bug_1  | [pip3] torchmetrics==0.7.2
+bug_1  | [pip3] torchvision==0.8.2
+bug_1  | [conda] blas                      1.0                         mkl  
+bug_1  | [conda] cudatoolkit               11.0.221             h6bb024c_0  
+bug_1  | [conda] mkl                       2020.2                      256  
+bug_1  | [conda] mkl-service               2.3.0            py38he904b0f_0  
+bug_1  | [conda] mkl_fft                   1.2.0            py38h23d657b_0  
+bug_1  | [conda] mkl_random                1.1.1            py38h0573a6f_0  
+bug_1  | [conda] numpy                     1.19.2           py38h54aff64_0  
+bug_1  | [conda] numpy-base                1.19.2           py38hfa32c7d_0  
+bug_1  | [conda] pytorch                   1.7.1           py3.8_cuda11.0.221_cudnn8.0.5_0    pytorch
+bug_1  | [conda] pytorch-lightning         1.5.10                   pypi_0    pypi
+bug_1  | [conda] torchelastic              0.2.1                    pypi_0    pypi
+bug_1  | [conda] torchmetrics              0.7.2                    pypi_0    pypi
+bug_1  | [conda] torchvision               0.8.2                py38_cu110    pytorch
+bug_1  | ****************************
+bug_1  | initializing distributed: GLOBAL_RANK: 1, MEMBER: 2/2
+bug_1  | /opt/conda/lib/python3.8/site-packages/pytorch_lightning/trainer/configuration_validator.py:120: UserWarning: You passed in a `val_dataloader` but have no `validation_step`. Skipping val loop.
+bug_1  |   rank_zero_warn("You passed in a `val_dataloader` but have no `validation_step`. Skipping val loop.")
+bug_1  | initializing distributed: GLOBAL_RANK: 0, MEMBER: 1/2
+bug_1  | 
+bug_1  | d16e32a2d904:8:8 [0] misc/ibvwrap.cc:63 NCCL WARN Failed to open libibverbs.so[.1]
+bug_1  | NCCL version 2.7.8+cuda11.0
+bug_1  | 
+bug_1  | d16e32a2d904:70:70 [1] misc/ibvwrap.cc:63 NCCL WARN Failed to open libibverbs.so[.1]

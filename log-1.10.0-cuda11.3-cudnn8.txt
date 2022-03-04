@@ -1,3 +1,9 @@
+Dockerfile as is in this project
+   FROM pytorch/pytorch:1.10.0-cuda11.3-cudnn8-runtime
+Obsever error
+   NCCL WARN Failed to open libibverbs.so
+
+
 john@john-trx40-designare:/Disk2/Documents/GitHub/NCCL-WARN-Failed-to-open-libibverbs$ sh run.sh
 Building bug
 Sending build context to Docker daemon  73.22kB
