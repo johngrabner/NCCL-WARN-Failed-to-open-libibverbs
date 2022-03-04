@@ -1,12 +1,12 @@
-Dockerfile as is in this project
-   FROM pytorch/pytorch:1.10.0-cuda11.3-cudnn8-runtime
-Obsever error
+Host has installed driver 470.
+Note same Error as when driver 510 installed on host.
+Observed Error:
    NCCL WARN Failed to open libibverbs.so
 
-
 john@john-trx40-designare:/Disk2/Documents/GitHub/NCCL-WARN-Failed-to-open-libibverbs$ sh run.sh
+[sudo] password for john: 
 Building bug
-Sending build context to Docker daemon  73.22kB
+Sending build context to Docker daemon  167.4kB
 Step 1/6 : FROM pytorch/pytorch:1.10.0-cuda11.3-cudnn8-runtime
  ---> c3f17e5ac010
 Step 2/6 : RUN pip install pytorch-lightning==1.5.10
@@ -16,12 +16,13 @@ Step 3/6 : WORKDIR /src
  ---> Using cache
  ---> d1b603759e31
 Step 4/6 : COPY ./bug-demo.py ./
+ ---> Using cache
  ---> be543e8a012a
 Step 5/6 : COPY ./collect_env.py ./
+ ---> Using cache
  ---> 21d44049c005
 Step 6/6 : CMD python ./bug-demo.py
- ---> Running in 97a651f3701e
-Removing intermediate container 97a651f3701e
+ ---> Using cache
  ---> 1108d8173c0a
 Successfully built 1108d8173c0a
 Successfully tagged bug:latest
@@ -29,22 +30,22 @@ Recreating bug_bug_1 ... done
 Attaching to bug_bug_1
 bug_1  | Downloading http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz
 bug_1  | Downloading http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz to /src/MNIST/raw/train-images-idx3-ubyte.gz
-9913344it [00:01, 9549150.23it/s]                              
+9913344it [00:00, 10206064.54it/s]                             
 bug_1  | Extracting /src/MNIST/raw/train-images-idx3-ubyte.gz to /src/MNIST/raw
 bug_1  | 
 bug_1  | Downloading http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz
 bug_1  | Downloading http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz to /src/MNIST/raw/train-labels-idx1-ubyte.gz
-29696it [00:00, 4802361.64it/s]          
-bug_1  | Extracting /src/MNIST/raw/train-labels-idx1-ubyte.gz to /src/MNIST/raw
+29696it [00:00, 3271539.49it/s]          Extracting /src/MNIST/raw/train-labels-idx1-ubyte.gz to /src/MNIST/raw
 bug_1  | 
 bug_1  | Downloading http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz
 bug_1  | Downloading http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz to /src/MNIST/raw/t10k-images-idx3-ubyte.gz
-1649664it [00:00, 6030238.65it/s]                            
-bug_1  | Extracting /src/MNIST/raw/t10k-images-idx3-ubyte.gz to /src/MNIST/raw
+bug_1  | 
+1649664it [00:00, 4776755.41it/s]                             Extracting /src/MNIST/raw/t10k-images-idx3-ubyte.gz to /src/MNIST/raw
 bug_1  | 
 bug_1  | Downloading http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz
 bug_1  | Downloading http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz to /src/MNIST/raw/t10k-labels-idx1-ubyte.gz
-5120it [00:00, 2049712.37it/s]          
+bug_1  | 
+5120it [00:00, 1116794.24it/s]          
 bug_1  | GPU available: True, used: True
 bug_1  | TPU available: False, using: 0 TPU cores
 bug_1  | IPU available: False, using: 0 IPUs
@@ -71,7 +72,7 @@ bug_1  | GPU models and configuration:
 bug_1  | GPU 0: NVIDIA RTX A6000
 bug_1  | GPU 1: NVIDIA RTX A6000
 bug_1  | 
-bug_1  | Nvidia driver version: 510.47.03
+bug_1  | Nvidia driver version: 470.103.01
 bug_1  | cuDNN version: Could not collect
 bug_1  | HIP runtime version: N/A
 bug_1  | MIOpen runtime version: N/A
@@ -122,7 +123,7 @@ bug_1  | GPU models and configuration:
 bug_1  | GPU 0: NVIDIA RTX A6000
 bug_1  | GPU 1: NVIDIA RTX A6000
 bug_1  | 
-bug_1  | Nvidia driver version: 510.47.03
+bug_1  | Nvidia driver version: 470.103.01
 bug_1  | cuDNN version: Could not collect
 bug_1  | HIP runtime version: N/A
 bug_1  | MIOpen runtime version: N/A
@@ -162,7 +163,7 @@ bug_1  | All distributed processes registered. Starting with 2 processes
 bug_1  | ----------------------------------------------------------------------------------------------------
 bug_1  | 
 bug_1  | 
-bug_1  | be7823cc7810:7:7 [0] misc/ibvwrap.cc:63 NCCL WARN Failed to open libibverbs.so[.1]
+bug_1  | 42b7d3ee8fde:7:7 [0] misc/ibvwrap.cc:63 NCCL WARN Failed to open libibverbs.so[.1]
 bug_1  | NCCL version 2.10.3+cuda11.3
 bug_1  | 
-bug_1  | be7823cc7810:72:72 [1] misc/ibvwrap.cc:63 NCCL WARN Failed to open libibverbs.so[.1]
+bug_1  | 42b7d3ee8fde:72:72 [1] misc/ibvwrap.cc:63 NCCL WARN Failed to open libibverbs.so[.1]
