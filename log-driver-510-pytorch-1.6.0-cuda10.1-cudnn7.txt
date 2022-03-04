@@ -1,8 +1,11 @@
+Host has installed driver 510
 in Dockerfile replace
    FROM pytorch/pytorch:1.10.0-cuda11.3-cudnn8-runtime
 with
    pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime
-to see complaint about NVIDIA RTX A6000 with CUDA capability sm_86 is not compatible with the current PyTorch installation.
+Obsever error
+   NVIDIA RTX A6000 with CUDA capability sm_86 is not compatible with the current PyTorch installation.
+   Hence reason for migrating my project beyond release 1.6 since I upgraded to A6000.
 
 john@john-trx40-designare:/Disk2/Documents/GitHub/NCCL-WARN-Failed-to-open-libibverbs$ sh run.sh 
 Building bug

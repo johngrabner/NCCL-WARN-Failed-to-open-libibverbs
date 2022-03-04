@@ -8,7 +8,7 @@ services: # containers, same as docker run
         context: .
         dockerfile: Dockerfile
     image: bug
-    #command: tail -F anything
+    #command: tail -F anything # uncomment to docker ps / docker exec -it xxxx /bin/bash to manualy python dub-demo.py
     shm_size: '8gb'
     deploy:                 # uncomment to give this docker access to GPU resources needed for "python train.py"
         resources:          # it worked once and failed once, todo sort out since a must for training
@@ -19,3 +19,6 @@ services: # containers, same as docker run
       - PYTHONIOENCODING=utf-8
       - PYTHONPATH=/src
       - NCCL_DEBUG=WARN # https://github.com/PyTorchLightning/pytorch-lightning/issues/9641
+    volumes:
+      - /Disk2/Documents/GitHub/NCCL-WARN-Failed-to-open-libibverbs/MNIST:/src/MNIST 
+      - /Disk2/Documents/GitHub/NCCL-WARN-Failed-to-open-libibverbs/lightning_logs:/src/lightning_logs

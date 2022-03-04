@@ -1,4 +1,6 @@
+from gc import callbacks
 import os
+
 import torch
 from torch import nn
 import torch.nn.functional as F
@@ -8,46 +10,68 @@ from torchvision import transforms
 import pytorch_lightning as pl
 import collect_env
 
-class LitAutoEncoder(pl.LightningModule):
+import os
+
+import torch
+from pytorch_lightning import LightningModule, Trainer
+from torch import nn
+from torch.nn import functional as F
+from torch.utils.data import DataLoader, random_split
+from torchmetrics import Accuracy
+from torchvision import transforms
+from torchvision.datasets import MNIST
+
+from pytorch_lightning.callbacks.progress import TQDMProgressBar 
+
+from datetime import datetime
+
+class MNISTModel(LightningModule):
     def __init__(self):
         super().__init__()
-        self.encoder = nn.Sequential(nn.Linear(28 * 28, 128), nn.ReLU(), nn.Linear(128, 3))
-        self.decoder = nn.Sequential(nn.Linear(3, 128), nn.ReLU(), nn.Linear(128, 28 * 28))
+        self.l1 = torch.nn.Linear(28 * 28, 10)
 
     def forward(self, x):
-        # in lightning, forward defines the prediction/inference actions
-        embedding = self.encoder(x)
-        return embedding
+        return torch.relu(self.l1(x.view(x.size(0), -1)))
 
-    def training_step(self, batch, batch_idx):
-        # training_step defines the train loop. It is independent of forward
+    def training_step(self, batch, batch_nb):
         x, y = batch
-        x = x.view(x.size(0), -1)
-        z = self.encoder(x)
-        x_hat = self.decoder(z)
-        loss = F.mse_loss(x_hat, x)
-        self.log("train_loss", loss)
+        loss = F.cross_entropy(self(x), y)
         return loss
 
     def configure_optimizers(self):
-        optimizer = torch.optim.Adam(self.parameters(), lr=1e-3)
-        return optimizer
+        return torch.optim.Adam(self.parameters(), lr=0.02)
 
 
 def main():
-    dataset = MNIST(os.getcwd(), download=True, transform=transforms.ToTensor())
-    train, val = random_split(dataset, [55000, 5000])
+    # Init our model
+    mnist_model = MNISTModel()
 
-    autoencoder = LitAutoEncoder()
-    trainer = pl.Trainer(gpus=[0,1],strategy='ddp')
+    # Init DataLoader from MNIST Dataset
+    train_ds = MNIST(os.getcwd(), train=True, download=True, transform=transforms.ToTensor())
+    train_loader = DataLoader(train_ds, batch_size=256, num_workers=10)
 
-    print("****************************", flush=True)
-    print(f"torch.cuda.device_count:{torch.cuda.device_count()}")
-    print("****************************", flush=True)
+    # information that python/python asks for
+    print("****************************")
     collect_env.main()
     print("****************************", flush=True)
-    trainer.fit(autoencoder, DataLoader(train), DataLoader(val))
 
+    # Initialize a trainer
+    trainer = Trainer(
+
+        callbacks=[TQDMProgressBar(refresh_rate=1)],
+        gpus=[0,1],
+        max_epochs=100, # about 2 minutes and 10 seconds on 1 A6000 ie: change gpu=[0] and comment out strategy='ddp'
+        accelerator="gpu",
+        strategy='ddp'
+    )
+
+
+
+    # Train the model 
+    print("start = ", datetime.now(), flush=True)
+    trainer.fit(mnist_model, train_loader)
+    print("end = ", datetime.now(), flush=True)
+    
 
 if __name__ == '__main__':
     main()

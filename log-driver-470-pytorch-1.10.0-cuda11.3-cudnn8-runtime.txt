@@ -3,10 +3,9 @@ Note same Error as when driver 510 installed on host.
 Observed Error:
    NCCL WARN Failed to open libibverbs.so
 
-john@john-trx40-designare:/Disk2/Documents/GitHub/NCCL-WARN-Failed-to-open-libibverbs$ sh run.sh
-[sudo] password for john: 
+john@john-trx40-designare:/Disk2/Documents/GitHub/NCCL-WARN-Failed-to-open-libibverbs$ sh run.sh 
 Building bug
-Sending build context to Docker daemon  167.4kB
+Sending build context to Docker daemon  67.45MB
 Step 1/6 : FROM pytorch/pytorch:1.10.0-cuda11.3-cudnn8-runtime
  ---> c3f17e5ac010
 Step 2/6 : RUN pip install pytorch-lightning==1.5.10
@@ -16,43 +15,70 @@ Step 3/6 : WORKDIR /src
  ---> Using cache
  ---> d1b603759e31
 Step 4/6 : COPY ./bug-demo.py ./
- ---> Using cache
- ---> be543e8a012a
+ ---> 64bf6e71d3cf
 Step 5/6 : COPY ./collect_env.py ./
- ---> Using cache
- ---> 21d44049c005
+ ---> ad96c61e3a60
 Step 6/6 : CMD python ./bug-demo.py
- ---> Using cache
- ---> 1108d8173c0a
-Successfully built 1108d8173c0a
+ ---> Running in c914982a7438
+Removing intermediate container c914982a7438
+ ---> 9b5356a1e47f
+Successfully built 9b5356a1e47f
 Successfully tagged bug:latest
 Recreating bug_bug_1 ... done
 Attaching to bug_bug_1
-bug_1  | Downloading http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz
-bug_1  | Downloading http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz to /src/MNIST/raw/train-images-idx3-ubyte.gz
-9913344it [00:00, 10206064.54it/s]                             
-bug_1  | Extracting /src/MNIST/raw/train-images-idx3-ubyte.gz to /src/MNIST/raw
+bug_1  | ****************************
+bug_1  | Collecting environment information...
+bug_1  | PyTorch version: 1.10.0
+bug_1  | Is debug build: False
+bug_1  | CUDA used to build PyTorch: 11.3
+bug_1  | ROCM used to build PyTorch: N/A
+bug_1  | OS: Ubuntu 18.04.6 LTS (x86_64)
+bug_1  | GCC version: Could not collect
+bug_1  | Clang version: Could not collect
+bug_1  | CMake version: Could not collect
+bug_1  | Libc version: glibc-2.17
+bug_1  | Python version: 3.7.11 (default, Jul 27 2021, 14:32:16)  [GCC 7.5.0] (64-bit runtime)
+bug_1  | Python platform: Linux-5.4.0-100-generic-x86_64-with-debian-buster-sid
+bug_1  | Is CUDA available: True
+bug_1  | CUDA runtime version: Could not collect
+bug_1  | GPU models and configuration: 
+bug_1  | GPU 0: NVIDIA RTX A6000
+bug_1  | GPU 1: NVIDIA RTX A6000
 bug_1  | 
-bug_1  | Downloading http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz
-bug_1  | Downloading http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz to /src/MNIST/raw/train-labels-idx1-ubyte.gz
-29696it [00:00, 3271539.49it/s]          Extracting /src/MNIST/raw/train-labels-idx1-ubyte.gz to /src/MNIST/raw
-bug_1  | 
-bug_1  | Downloading http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz
-bug_1  | Downloading http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz to /src/MNIST/raw/t10k-images-idx3-ubyte.gz
-bug_1  | 
-1649664it [00:00, 4776755.41it/s]                             Extracting /src/MNIST/raw/t10k-images-idx3-ubyte.gz to /src/MNIST/raw
-bug_1  | 
-bug_1  | Downloading http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz
-bug_1  | Downloading http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz to /src/MNIST/raw/t10k-labels-idx1-ubyte.gz
-bug_1  | 
-5120it [00:00, 1116794.24it/s]          
+bug_1  | Nvidia driver version: 470.103.01
+bug_1  | cuDNN version: Could not collect
+bug_1  | HIP runtime version: N/A
+bug_1  | MIOpen runtime version: N/A
+bug_1  | Is XNNPACK available: True
+bug_1  | Versions of relevant libraries:
+bug_1  | [pip3] numpy==1.21.2
+bug_1  | [pip3] pytorch-lightning==1.5.10
+bug_1  | [pip3] torch==1.10.0
+bug_1  | [pip3] torchelastic==0.2.0
+bug_1  | [pip3] torchmetrics==0.7.2
+bug_1  | [pip3] torchtext==0.11.0
+bug_1  | [pip3] torchvision==0.11.0
+bug_1  | [conda] blas                      1.0                         mkl  
+bug_1  | [conda] cudatoolkit               11.3.1               ha36c431_9    nvidia
+bug_1  | [conda] ffmpeg                    4.3                  hf484d3e_0    pytorch
+bug_1  | [conda] mkl                       2021.3.0           h06a4308_520  
+bug_1  | [conda] mkl-service               2.4.0            py37h7f8727e_0  
+bug_1  | [conda] mkl_fft                   1.3.1            py37hd3c417c_0  
+bug_1  | [conda] mkl_random                1.2.2            py37h51133e4_0  
+bug_1  | [conda] numpy                     1.21.2           py37h20f2e39_0  
+bug_1  | [conda] numpy-base                1.21.2           py37h79a1101_0  
+bug_1  | [conda] pytorch                   1.10.0          py3.7_cuda11.3_cudnn8.2.0_0    pytorch
+bug_1  | [conda] pytorch-lightning         1.5.10                   pypi_0    pypi
+bug_1  | [conda] pytorch-mutex             1.0                        cuda    pytorch
+bug_1  | [conda] torchelastic              0.2.0                    pypi_0    pypi
+bug_1  | [conda] torchmetrics              0.7.2                    pypi_0    pypi
+bug_1  | [conda] torchtext                 0.11.0                     py37    pytorch
+bug_1  | [conda] torchvision               0.11.0               py37_cu113    pytorch
+bug_1  | ****************************
 bug_1  | GPU available: True, used: True
 bug_1  | TPU available: False, using: 0 TPU cores
 bug_1  | IPU available: False, using: 0 IPUs
-bug_1  | Extracting /src/MNIST/raw/t10k-labels-idx1-ubyte.gz to /src/MNIST/raw
-bug_1  | 
-bug_1  | ****************************
-bug_1  | torch.cuda.device_count:2
+bug_1  | start =  2022-03-04 23:44:45.861717
 bug_1  | ****************************
 bug_1  | Collecting environment information...
 bug_1  | PyTorch version: 1.10.0
@@ -102,60 +128,8 @@ bug_1  | [conda] torchmetrics              0.7.2                    pypi_0    py
 bug_1  | [conda] torchtext                 0.11.0                     py37    pytorch
 bug_1  | [conda] torchvision               0.11.0               py37_cu113    pytorch
 bug_1  | ****************************
-bug_1  | ****************************
-bug_1  | torch.cuda.device_count:2
-bug_1  | ****************************
-bug_1  | Collecting environment information...
-bug_1  | PyTorch version: 1.10.0
-bug_1  | Is debug build: False
-bug_1  | CUDA used to build PyTorch: 11.3
-bug_1  | ROCM used to build PyTorch: N/A
-bug_1  | OS: Ubuntu 18.04.6 LTS (x86_64)
-bug_1  | GCC version: Could not collect
-bug_1  | Clang version: Could not collect
-bug_1  | CMake version: Could not collect
-bug_1  | Libc version: glibc-2.17
-bug_1  | Python version: 3.7.11 (default, Jul 27 2021, 14:32:16)  [GCC 7.5.0] (64-bit runtime)
-bug_1  | Python platform: Linux-5.4.0-100-generic-x86_64-with-debian-buster-sid
-bug_1  | Is CUDA available: True
-bug_1  | CUDA runtime version: Could not collect
-bug_1  | GPU models and configuration: 
-bug_1  | GPU 0: NVIDIA RTX A6000
-bug_1  | GPU 1: NVIDIA RTX A6000
-bug_1  | 
-bug_1  | Nvidia driver version: 470.103.01
-bug_1  | cuDNN version: Could not collect
-bug_1  | HIP runtime version: N/A
-bug_1  | MIOpen runtime version: N/A
-bug_1  | Is XNNPACK available: True
-bug_1  | Versions of relevant libraries:
-bug_1  | [pip3] numpy==1.21.2
-bug_1  | [pip3] pytorch-lightning==1.5.10
-bug_1  | [pip3] torch==1.10.0
-bug_1  | [pip3] torchelastic==0.2.0
-bug_1  | [pip3] torchmetrics==0.7.2
-bug_1  | [pip3] torchtext==0.11.0
-bug_1  | [pip3] torchvision==0.11.0
-bug_1  | [conda] blas                      1.0                         mkl  
-bug_1  | [conda] cudatoolkit               11.3.1               ha36c431_9    nvidia
-bug_1  | [conda] ffmpeg                    4.3                  hf484d3e_0    pytorch
-bug_1  | [conda] mkl                       2021.3.0           h06a4308_520  
-bug_1  | [conda] mkl-service               2.4.0            py37h7f8727e_0  
-bug_1  | [conda] mkl_fft                   1.3.1            py37hd3c417c_0  
-bug_1  | [conda] mkl_random                1.2.2            py37h51133e4_0  
-bug_1  | [conda] numpy                     1.21.2           py37h20f2e39_0  
-bug_1  | [conda] numpy-base                1.21.2           py37h79a1101_0  
-bug_1  | [conda] pytorch                   1.10.0          py3.7_cuda11.3_cudnn8.2.0_0    pytorch
-bug_1  | [conda] pytorch-lightning         1.5.10                   pypi_0    pypi
-bug_1  | [conda] pytorch-mutex             1.0                        cuda    pytorch
-bug_1  | [conda] torchelastic              0.2.0                    pypi_0    pypi
-bug_1  | [conda] torchmetrics              0.7.2                    pypi_0    pypi
-bug_1  | [conda] torchtext                 0.11.0                     py37    pytorch
-bug_1  | [conda] torchvision               0.11.0               py37_cu113    pytorch
-bug_1  | ****************************
+bug_1  | start =  2022-03-04 23:44:47.925109
 bug_1  | initializing distributed: GLOBAL_RANK: 1, MEMBER: 2/2
-bug_1  | /opt/conda/lib/python3.7/site-packages/pytorch_lightning/trainer/configuration_validator.py:120: UserWarning: You passed in a `val_dataloader` but have no `validation_step`. Skipping val loop.
-bug_1  |   rank_zero_warn("You passed in a `val_dataloader` but have no `validation_step`. Skipping val loop.")
 bug_1  | initializing distributed: GLOBAL_RANK: 0, MEMBER: 1/2
 bug_1  | ----------------------------------------------------------------------------------------------------
 bug_1  | distributed_backend=nccl
@@ -163,7 +137,8 @@ bug_1  | All distributed processes registered. Starting with 2 processes
 bug_1  | ----------------------------------------------------------------------------------------------------
 bug_1  | 
 bug_1  | 
-bug_1  | 42b7d3ee8fde:7:7 [0] misc/ibvwrap.cc:63 NCCL WARN Failed to open libibverbs.so[.1]
+bug_1  | 0fe8ec38e726:7:7 [0] misc/ibvwrap.cc:63 NCCL WARN Failed to open libibverbs.so[.1]
 bug_1  | NCCL version 2.10.3+cuda11.3
 bug_1  | 
-bug_1  | 42b7d3ee8fde:72:72 [1] misc/ibvwrap.cc:63 NCCL WARN Failed to open libibverbs.so[.1]
+bug_1  | 0fe8ec38e726:71:71 [1] misc/ibvwrap.cc:63 NCCL WARN Failed to open libibverbs.so[.1]
+
