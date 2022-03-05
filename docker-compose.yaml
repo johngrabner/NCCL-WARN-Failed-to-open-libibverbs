@@ -18,7 +18,10 @@ services: # containers, same as docker run
     environment:
       - PYTHONIOENCODING=utf-8
       - PYTHONPATH=/src
-      - NCCL_DEBUG=WARN # https://github.com/PyTorchLightning/pytorch-lightning/issues/9641
+      #- NCCL_DEBUG=WARN # https://github.com/PyTorchLightning/pytorch-lightning/issues/9641
+      # as per suggestion on https://github.com/pytorch/pytorch/issues/73790
+      - NCCL_DEBUG=INFO
+      - TORCH_DISTRIBUTED_DEBUG=DETAIL
     volumes:
       - ./MNIST:/src/MNIST 
       - ./lightning_logs:/src/lightning_logs

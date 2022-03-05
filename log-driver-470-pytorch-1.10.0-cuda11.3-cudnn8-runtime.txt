@@ -1,11 +1,13 @@
 Host has installed driver 470.
 Note same Error as when driver 510 installed on host.
+as per suggestion on https://github.com/pytorch/pytorch/issues/73790
+
 Observed Error:
    NCCL WARN Failed to open libibverbs.so
 
 john@john-trx40-designare:/Disk2/Documents/GitHub/NCCL-WARN-Failed-to-open-libibverbs$ sh run.sh 
 Building bug
-Sending build context to Docker daemon  67.45MB
+Sending build context to Docker daemon  67.59MB
 Step 1/6 : FROM pytorch/pytorch:1.10.0-cuda11.3-cudnn8-runtime
  ---> c3f17e5ac010
 Step 2/6 : RUN pip install pytorch-lightning==1.5.10
@@ -15,12 +17,13 @@ Step 3/6 : WORKDIR /src
  ---> Using cache
  ---> d1b603759e31
 Step 4/6 : COPY ./bug-demo.py ./
+ ---> Using cache
  ---> 64bf6e71d3cf
 Step 5/6 : COPY ./collect_env.py ./
+ ---> Using cache
  ---> ad96c61e3a60
 Step 6/6 : CMD python ./bug-demo.py
- ---> Running in c914982a7438
-Removing intermediate container c914982a7438
+ ---> Using cache
  ---> 9b5356a1e47f
 Successfully built 9b5356a1e47f
 Successfully tagged bug:latest
@@ -78,7 +81,7 @@ bug_1  | ****************************
 bug_1  | GPU available: True, used: True
 bug_1  | TPU available: False, using: 0 TPU cores
 bug_1  | IPU available: False, using: 0 IPUs
-bug_1  | start =  2022-03-04 23:44:45.861717
+bug_1  | start =  2022-03-05 15:37:55.723760
 bug_1  | ****************************
 bug_1  | Collecting environment information...
 bug_1  | PyTorch version: 1.10.0
@@ -128,7 +131,7 @@ bug_1  | [conda] torchmetrics              0.7.2                    pypi_0    py
 bug_1  | [conda] torchtext                 0.11.0                     py37    pytorch
 bug_1  | [conda] torchvision               0.11.0               py37_cu113    pytorch
 bug_1  | ****************************
-bug_1  | start =  2022-03-04 23:44:47.925109
+bug_1  | start =  2022-03-05 15:37:57.762277
 bug_1  | initializing distributed: GLOBAL_RANK: 1, MEMBER: 2/2
 bug_1  | initializing distributed: GLOBAL_RANK: 0, MEMBER: 1/2
 bug_1  | ----------------------------------------------------------------------------------------------------
@@ -136,9 +139,42 @@ bug_1  | distributed_backend=nccl
 bug_1  | All distributed processes registered. Starting with 2 processes
 bug_1  | ----------------------------------------------------------------------------------------------------
 bug_1  | 
+bug_1  | 5b925186e432:8:8 [0] NCCL INFO Bootstrap : Using eth0:172.20.0.2<0>
+bug_1  | 5b925186e432:8:8 [0] NCCL INFO NET/Plugin : No plugin found (libnccl-net.so), using internal implementation
 bug_1  | 
-bug_1  | 0fe8ec38e726:7:7 [0] misc/ibvwrap.cc:63 NCCL WARN Failed to open libibverbs.so[.1]
+bug_1  | 5b925186e432:8:8 [0] misc/ibvwrap.cc:63 NCCL WARN Failed to open libibverbs.so[.1]
+bug_1  | 5b925186e432:8:8 [0] NCCL INFO NET/Socket : Using [0]eth0:172.20.0.2<0>
+bug_1  | 5b925186e432:8:8 [0] NCCL INFO Using network Socket
 bug_1  | NCCL version 2.10.3+cuda11.3
+bug_1  | 5b925186e432:72:72 [1] NCCL INFO Bootstrap : Using eth0:172.20.0.2<0>
+bug_1  | 5b925186e432:72:72 [1] NCCL INFO NET/Plugin : No plugin found (libnccl-net.so), using internal implementation
 bug_1  | 
-bug_1  | 0fe8ec38e726:71:71 [1] misc/ibvwrap.cc:63 NCCL WARN Failed to open libibverbs.so[.1]
+bug_1  | 5b925186e432:72:72 [1] misc/ibvwrap.cc:63 NCCL WARN Failed to open libibverbs.so[.1]
+bug_1  | 5b925186e432:72:72 [1] NCCL INFO NET/Socket : Using [0]eth0:172.20.0.2<0>
+bug_1  | 5b925186e432:72:72 [1] NCCL INFO Using network Socket
+bug_1  | 5b925186e432:8:152 [0] NCCL INFO Channel 00/04 :    0   1
+bug_1  | 5b925186e432:72:153 [1] NCCL INFO Trees [0] -1/-1/-1->1->0 [1] 0/-1/-1->1->-1 [2] -1/-1/-1->1->0 [3] 0/-1/-1->1->-1
+bug_1  | 5b925186e432:8:152 [0] NCCL INFO Channel 01/04 :    0   1
+bug_1  | 5b925186e432:8:152 [0] NCCL INFO Channel 02/04 :    0   1
+bug_1  | 5b925186e432:8:152 [0] NCCL INFO Channel 03/04 :    0   1
+bug_1  | 5b925186e432:8:152 [0] NCCL INFO Trees [0] 1/-1/-1->0->-1 [1] -1/-1/-1->0->1 [2] 1/-1/-1->0->-1 [3] -1/-1/-1->0->1
+bug_1  | 5b925186e432:72:153 [1] NCCL INFO Channel 00 : 1[4a000] -> 0[21000] via P2P/IPC
+bug_1  | 5b925186e432:8:152 [0] NCCL INFO Channel 00 : 0[21000] -> 1[4a000] via P2P/IPC
+bug_1  | 5b925186e432:72:153 [1] NCCL INFO Channel 01 : 1[4a000] -> 0[21000] via P2P/IPC
+bug_1  | 5b925186e432:8:152 [0] NCCL INFO Channel 01 : 0[21000] -> 1[4a000] via P2P/IPC
+bug_1  | 5b925186e432:72:153 [1] NCCL INFO Channel 02 : 1[4a000] -> 0[21000] via P2P/IPC
+bug_1  | 5b925186e432:8:152 [0] NCCL INFO Channel 02 : 0[21000] -> 1[4a000] via P2P/IPC
+bug_1  | 5b925186e432:72:153 [1] NCCL INFO Channel 03 : 1[4a000] -> 0[21000] via P2P/IPC
+bug_1  | 5b925186e432:8:152 [0] NCCL INFO Channel 03 : 0[21000] -> 1[4a000] via P2P/IPC
+bug_1  | 5b925186e432:72:153 [1] NCCL INFO Connected all rings
+bug_1  | 5b925186e432:72:153 [1] NCCL INFO Connected all trees
+bug_1  | 5b925186e432:72:153 [1] NCCL INFO threadThresholds 8/8/64 | 16/8/64 | 8/8/512
+bug_1  | 5b925186e432:72:153 [1] NCCL INFO 4 coll channels, 4 p2p channels, 2 p2p channels per peer
+bug_1  | 5b925186e432:8:152 [0] NCCL INFO Connected all rings
+bug_1  | 5b925186e432:8:152 [0] NCCL INFO Connected all trees
+bug_1  | 5b925186e432:8:152 [0] NCCL INFO threadThresholds 8/8/64 | 16/8/64 | 8/8/512
+bug_1  | 5b925186e432:8:152 [0] NCCL INFO 4 coll channels, 4 p2p channels, 2 p2p channels per peer
+bug_1  | 5b925186e432:8:152 [0] NCCL INFO comm 0x7fa0f8002f70 rank 0 nranks 2 cudaDev 0 busId 21000 - Init COMPLETE
+bug_1  | 5b925186e432:72:153 [1] NCCL INFO comm 0x7f4e64002f70 rank 1 nranks 2 cudaDev 1 busId 4a000 - Init COMPLETE
+bug_1  | 5b925186e432:8:8 [0] NCCL INFO Launch mode Parallel
 
