@@ -20,5 +20,5 @@ services: # containers, same as docker run
       - PYTHONPATH=/src
       - NCCL_DEBUG=WARN # https://github.com/PyTorchLightning/pytorch-lightning/issues/9641
     volumes:
-      - /Disk2/Documents/GitHub/NCCL-WARN-Failed-to-open-libibverbs/MNIST:/src/MNIST 
-      - /Disk2/Documents/GitHub/NCCL-WARN-Failed-to-open-libibverbs/lightning_logs:/src/lightning_logs
+      - ./MNIST:/src/MNIST 
+      - ./lightning_logs:/src/lightning_logs
